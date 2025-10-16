@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+      padding-top: 50px;
+    }
+    #click-btn {
+      font-size: 24px;
+      padding: 20px 40px;
+      cursor: pointer;
+    }
+    #score, #timer, #message {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Click the Button Game</h1>
+  <button id="click-btn">Click Me!</button>
+  <div id="score">Score: 0</div>
+  <div id="timer">Time Left: 10s</div>
+  <div id="message"></div>
+
+  <script>
+    let score = 0;
+    let timeLeft = 10;
+    let gameStarted = false;
+    let timerInterval;
+
+    const clickBtn = document.getElementById('click-btn');
+    const scoreDisplay = document.getElementById('score');
+    const timerDisplay = document.getElementById('timer');
+    const messageDisplay = document.getElementById('message');
+
+    function updateScore() {
+      if (!gameStarted) {
+        gameStarted = true;
+        startTimer();
+      }
+
+      if (timeLeft > 0) {
+        score++;
+        scoreDisplay.textContent = 'Score: ' + score;
+      }
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = 'Time Left: ' + timeLeft + 's';
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          clickBtn.disabled = true;
+          messageDisplay.textContent = 'Time’s up! You scored ' + score + ' clicks.';
+        }
+      }, 1000);
+    }
+
+    clickBtn.addEventListener('click', updateScore);
+  </script>
+
+</body>
+</html>
 
